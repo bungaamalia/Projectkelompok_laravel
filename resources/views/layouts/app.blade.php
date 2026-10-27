@@ -184,37 +184,114 @@
 </head>
 
 <body>
+    
     @php
         $role = session('user.role', 'Mahasiswa');
 
         if ($role === 'Admin') {
             $menus = [
-                ['route' => 'mahasiswa.index', 'path' => 'mahasiswa*', 'icon' => 'fa-users', 'label' => 'Data Mahasiswa'],
-                ['route' => 'dosen.index', 'path' => 'dosen*', 'icon' => 'fa-user-tie', 'label' => 'Data Dosen'],
-                ['route' => 'mata-kuliah.index', 'path' => 'mata-kuliah*', 'icon' => 'fa-book', 'label' => 'Data Mata Kuliah'],
-                ['route' => 'jadwal.index', 'path' => 'jadwal*', 'icon' => 'fa-calendar-days', 'label' => 'Jadwal Kuliah'],
-                ['route' => 'sesi.index', 'path' => 'sesi-presensi*', 'icon' => 'fa-qrcode', 'label' => 'Kelola Sesi Presensi'],
-                ['route' => 'presensi.index', 'path' => 'presensi*', 'icon' => 'fa-clipboard-check', 'label' => 'Pencatatan Presensi'],
-                ['route' => 'presensi08.index', 'path' => 'riwayat-presensi*', 'icon' => 'fa-clock-rotate-left', 'label' => 'Riwayat Presensi'],
-                ['route' => 'profile.index', 'path' => 'profile*', 'icon' => 'fa-user', 'label' => 'Profil Saya'],
+                [
+                    'route' => 'mahasiswa.index',
+                    'path' => 'mahasiswa*',
+                    'icon' => 'fa-users',
+                    'label' => 'Data Mahasiswa'
+                ],
+                [
+                    'route' => 'dosen.index',
+                    'path' => 'dosen*',
+                    'icon' => 'fa-user-tie',
+                    'label' => 'Data Dosen'
+                ],
+                [
+                    'route' => 'mata-kuliah.index',
+                    'path' => 'mata-kuliah*',
+                    'icon' => 'fa-book',
+                    'label' => 'Data Mata Kuliah'
+                ],
+                [
+                    'route' => 'jadwal.index',
+                    'path' => 'jadwal*',
+                    'icon' => 'fa-calendar-days',
+                    'label' => 'Jadwal Kuliah'
+                ],
+                [
+                    'route' => 'presensi08.index',
+                    'path' => 'riwayat-presensi*',
+                    'icon' => 'fa-clock-rotate-left',
+                    'label' => 'Rekap Presensi'
+                ],
+                [
+                    'route' => 'profile.index',
+                    'path' => 'profile*',
+                    'icon' => 'fa-user',
+                    'label' => 'Profil Saya'
+                ],
             ];
+
         } elseif ($role === 'Dosen') {
             $menus = [
-                ['route' => 'jadwal.index', 'path' => 'jadwal*', 'icon' => 'fa-calendar-days', 'label' => 'Jadwal Mengajar'],
-                ['route' => 'sesi.index', 'path' => 'sesi-presensi*', 'icon' => 'fa-qrcode', 'label' => 'Kelola Sesi Presensi'],
-                ['route' => 'presensi.index', 'path' => 'presensi*', 'icon' => 'fa-clipboard-check', 'label' => 'Pencatatan Presensi'],
-                ['route' => 'presensi08.index', 'path' => 'riwayat-presensi*', 'icon' => 'fa-clock-rotate-left', 'label' => 'Riwayat Presensi'],
-                ['route' => 'profile.index', 'path' => 'profile*', 'icon' => 'fa-user', 'label' => 'Profil Saya'],
+                [
+                    'route' => 'jadwal.index',
+                    'path' => 'jadwal*',
+                    'icon' => 'fa-calendar-days',
+                    'label' => 'Jadwal Mengajar'
+                ],
+                [
+                    'route' => 'sesi.index',
+                    'path' => 'sesi-presensi*',
+                    'icon' => 'fa-qrcode',
+                    'label' => 'Kelola Sesi Presensi'
+                ],
+                [
+                    'route' => 'presensi.index',
+                    'path' => 'presensi*',
+                    'icon' => 'fa-clipboard-check',
+                    'label' => 'Pencatatan Presensi'
+                ],
+                [
+                    'route' => 'presensi08.index',
+                    'path' => 'riwayat-presensi*',
+                    'icon' => 'fa-clock-rotate-left',
+                    'label' => 'Riwayat Presensi'
+                ],
+                [
+                    'route' => 'profile.index',
+                    'path' => 'profile*',
+                    'icon' => 'fa-user',
+                    'label' => 'Profil Saya'
+                ],
             ];
+
         } else {
             $menus = [
-                ['route' => 'jadwal.index', 'path' => 'jadwal*', 'icon' => 'fa-calendar-days', 'label' => 'Jadwal Kuliah'],
-                ['route' => 'presensi.index', 'path' => 'presensi*', 'icon' => 'fa-clipboard-check', 'label' => 'Presensi Kuliah'],
-                ['route' => 'presensi08.index', 'path' => 'riwayat-presensi*', 'icon' => 'fa-clock-rotate-left', 'label' => 'Riwayat Presensi Saya'],
-                ['route' => 'profile.index', 'path' => 'profile*', 'icon' => 'fa-user', 'label' => 'Profil Saya'],
+                [
+                    'route' => 'jadwal.index',
+                    'path' => 'jadwal*',
+                    'icon' => 'fa-calendar-days',
+                    'label' => 'Jadwal Kuliah'
+                ],
+                [
+                    'route' => 'presensi.index',
+                    'path' => 'presensi*',
+                    'icon' => 'fa-clipboard-check',
+                    'label' => 'Presensi Kuliah'
+                ],
+                [
+                    'route' => 'presensi08.index',
+                    'path' => 'riwayat-presensi*',
+                    'icon' => 'fa-clock-rotate-left',
+                    'label' => 'Riwayat Presensi Saya'
+                ],
+                [
+                    'route' => 'profile.index',
+                    'path' => 'profile*',
+                    'icon' => 'fa-user',
+                    'label' => 'Profil Saya'
+                ],
             ];
         }
     @endphp
+
 
     <aside class="sidebar">
         <div>

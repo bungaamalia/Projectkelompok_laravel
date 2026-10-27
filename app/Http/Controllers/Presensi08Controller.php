@@ -12,61 +12,61 @@ class Presensi08Controller extends Controller
             [
                 'id' => 1,
                 'nim' => '24100001',
-                'nama' => 'Bunga Amalia Kharismawati',
-                'matkul' => 'Algoritma dan Pemrograman',
+                'nama' => 'Bunga',
+                'matkul' => 'Algoritma',
                 'tanggal' => '2026-10-19',
+                'waktu' => '08:00',
                 'status' => 'Hadir',
-                'waktu' => '08:03',
                 'alasan' => '',
             ],
             [
                 'id' => 2,
-                'nim' => '24100001',
-                'nama' => 'Bunga Amalia Kharismawati',
+                'nim' => '24100002',
+                'nama' => 'Aditya',
                 'matkul' => 'Basis Data',
-                'tanggal' => '2026-10-20',
-                'status' => 'Hadir',
-                'waktu' => '13:02',
-                'alasan' => '',
+                'tanggal' => '2026-10-19',
+                'waktu' => '08:10',
+                'status' => 'Izin',
+                'alasan' => 'Ada keperluan',
             ],
             [
                 'id' => 3,
-                'nim' => '24100001',
-                'nama' => 'Bunga Amalia Kharismawati',
+                'nim' => '24100003',
+                'nama' => 'Nadia',
                 'matkul' => 'Pemrograman Web',
-                'tanggal' => '2026-10-21',
-                'status' => 'Izin',
-                'waktu' => '—',
-                'alasan' => '',
+                'tanggal' => '2026-10-20',
+                'waktu' => '09:00',
+                'status' => 'Sakit',
+                'alasan' => 'Sedang sakit',
             ],
             [
                 'id' => 4,
-                'nim' => '24100002',
-                'nama' => 'Aditya Pratama',
-                'matkul' => 'Algoritma dan Pemrograman',
-                'tanggal' => '2026-10-19',
-                'status' => 'Hadir',
-                'waktu' => '08:05',
+                'nim' => '24100001',
+                'nama' => 'Bunga',
+                'matkul' => 'Basis Data',
+                'tanggal' => '2026-10-20',
+                'waktu' => '08:00',
+                'status' => 'Alpha',
                 'alasan' => '',
             ],
             [
                 'id' => 5,
                 'nim' => '24100002',
-                'nama' => 'Aditya Pratama',
-                'matkul' => 'Basis Data',
-                'tanggal' => '2026-10-20',
-                'status' => 'Sakit',
-                'waktu' => '—',
+                'nama' => 'Aditya',
+                'matkul' => 'Pemrograman Web',
+                'tanggal' => '2026-10-21',
+                'waktu' => '09:00',
+                'status' => 'Hadir',
                 'alasan' => '',
             ],
             [
                 'id' => 6,
                 'nim' => '24100003',
-                'nama' => 'Nadia Putri Lestari',
-                'matkul' => 'Algoritma dan Pemrograman',
-                'tanggal' => '2026-10-19',
-                'status' => 'Alpha',
+                'nama' => 'Nadia',
+                'matkul' => 'Algoritma',
+                'tanggal' => '2026-10-21',
                 'waktu' => '—',
+                'status' => 'Alpha',
                 'alasan' => '',
             ],
         ];
@@ -78,7 +78,7 @@ class Presensi08Controller extends Controller
             session(['dummy_riwayat' => $this->initial()]);
         }
 
-        return session('dummy_riwayat');
+        return session('dummy_riwayat', []);
     }
 
     public function index(Request $request)
@@ -92,36 +92,50 @@ class Presensi08Controller extends Controller
 
         $rows = $this->rows();
 
+        // Mahasiswa hanya melihat riwayat miliknya sendiri.
         if ($role === 'Mahasiswa') {
+            $username = (string) ($user['username'] ?? '');
+
             $rows = array_values(array_filter(
                 $rows,
-                fn ($row) => $row['nim'] === ($user['username'] ?? '')
+                fn ($row) => (string) $row['nim'] === $username
             ));
         }
 
+        // Filter pencarian, status, dan mata kuliah.
         $riwayatMahasiswa = array_values(array_filter(
             $rows,
             function ($row) use ($keyword, $status, $matkul) {
-                $matchKeyword = $keyword === '' ||
-                    stripos($row['nama'] . ' ' . $row['nim'] . ' ' . $row['matkul'], $keyword) !== false;
+                $cocokKeyword = $keyword === ''
+                    || stripos($row['nama'], $keyword) !== false
+                    || stripos($row['nim'], $keyword) !== false
+                    || stripos($row['matkul'], $keyword) !== false;
 
-                $matchStatus = $status === '' || $row['status'] === $status;
-                $matchMatkul = $matkul === '' || $row['matkul'] === $matkul;
+                $cocokStatus = $status === ''
+                    || $row['status'] === $status;
 
-                return $matchKeyword && $matchStatus && $matchMatkul;
+                $cocokMatkul = $matkul === ''
+                    || $row['matkul'] === $matkul;
+
+                return $cocokKeyword && $cocokStatus && $cocokMatkul;
             }
         ));
 
-        $counts = [];
+        $counts = [
+            'Hadir' => 0,
+            'Izin' => 0,
+            'Sakit' => 0,
+            'Alpha' => 0,
+        ];
 
-        foreach (['Hadir', 'Izin', 'Sakit', 'Alpha'] as $itemStatus) {
-            $counts[$itemStatus] = count(array_filter(
-                $riwayatMahasiswa,
-                fn ($row) => $row['status'] === $itemStatus
-            ));
+        foreach ($riwayatMahasiswa as $row) {
+            if (isset($counts[$row['status']])) {
+                $counts[$row['status']]++;
+            }
         }
 
         $total = count($riwayatMahasiswa);
+
         $persentase = $total > 0
             ? (int) round(($counts['Hadir'] / $total) * 100)
             : 0;
@@ -153,6 +167,7 @@ class Presensi08Controller extends Controller
             'persentase' => $persentase,
             'statusFilter' => $status,
             'search' => $keyword,
+            'isAdmin' => $role === 'Admin',
             'isDosen' => $role === 'Dosen',
             'isMahasiswa' => $role === 'Mahasiswa',
             'selectedStudent' => '',
@@ -166,10 +181,8 @@ class Presensi08Controller extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        abort_unless(
-            in_array(session('user.role'), ['Dosen', 'Admin']),
-            403
-        );
+        // Hanya Dosen yang boleh memperbarui status.
+        abort_unless(session('user.role') === 'Dosen', 403);
 
         $data = $request->validate([
             'status' => 'required|in:Hadir,Izin,Sakit,Alpha',
