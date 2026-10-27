@@ -1,5 +1,4 @@
 @extends('layouts.app')
-<<<<<<< HEAD
 
 @section('page-title', 'Data Dosen')
 
@@ -31,7 +30,6 @@
             </tr>
         </tbody>
     </table>
-=======
 @section('title', 'Data Dosen')
 @section('heading', 'Data Dosen')
 @section('content')
@@ -66,6 +64,5 @@
             </tbody>
         </table>
     </div>
->>>>>>> adf6543c822861eed8508458e30f7487ead6e5d9
 </div>
 @endsection

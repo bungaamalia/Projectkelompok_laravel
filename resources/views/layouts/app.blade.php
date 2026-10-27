@@ -1,13 +1,9 @@
-<<<<<<< HEAD
-=======
 
->>>>>>> adf6543c822861eed8508458e30f7487ead6e5d9
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
     <title>UCS Akademik</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -114,7 +110,6 @@
             font-size: 0.95rem;
             font-weight: 600;
             color: #333333;
-=======
 
     <title>@yield('title', 'UCS Akademik')</title>
 
@@ -242,13 +237,11 @@
         .topbar-title {
             font-size: 17px;
             font-weight: 600;
->>>>>>> adf6543c822861eed8508458e30f7487ead6e5d9
         }
 
         .topbar-user {
             display: flex;
             align-items: center;
-<<<<<<< HEAD
             gap: 12px;
             font-size: 0.9rem;
             font-weight: 500;
@@ -338,7 +331,6 @@
                 <button type="submit" class="sidebar-logout-btn text-danger-light">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     <span>Keluar / Logout</span>
-=======
             gap: 10px;
             font-size: 14px;
         }
@@ -533,13 +525,11 @@
                 <button type="submit" class="sidebar-logout-btn">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     <span>Keluar</span>
->>>>>>> adf6543c822861eed8508458e30f7487ead6e5d9
                 </button>
             </form>
         </div>
     </aside>
 
-<<<<<<< HEAD
     <!-- Main Wrapper -->
     <div class="main-wrapper">
         <!-- Topbar -->
@@ -561,7 +551,6 @@
 
         <!-- Content Area -->
         <main class="content-body">
-=======
     <div class="main-wrapper">
         <header class="topbar">
             <div class="topbar-title">
@@ -597,18 +586,14 @@
                 </div>
             @endif
 
->>>>>>> adf6543c822861eed8508458e30f7487ead6e5d9
             @yield('content')
         </main>
     </div>
 
-<<<<<<< HEAD
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-=======
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
->>>>>>> adf6543c822861eed8508458e30f7487ead6e5d9

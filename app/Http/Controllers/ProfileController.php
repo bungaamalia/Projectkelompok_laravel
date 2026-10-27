@@ -8,8 +8,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
-<<<<<<< HEAD
-        // Mengambil data user yang sedang login dari Session
+        // Mengambil data user yang sedang login dari Session (dengan default data profilmu jika session kosong)
         $user = session('user', [
             'username' => '24100001',
             'nama'     => 'Bunga Amalia K.',
@@ -19,48 +18,27 @@ class ProfileController extends Controller
         ]);
 
         return view('profile.index', compact('user'));
-=======
-        return view('profile.index', [
-            'user' => session('user'),
-        ]);
->>>>>>> adf6543c822861eed8508458e30f7487ead6e5d9
     }
 
     public function update(Request $request)
     {
-<<<<<<< HEAD
-        $request->validate([
-            'nama'  => 'required',
-            'no_hp' => 'required'
-        ]);
-
-        $user = session('user');
-        $user['nama'] = $request->nama;
-        $user['no_hp'] = $request->no_hp;
-        
-        session(['user' => $user]);
-
-        return back()->with('success', 'Profil berhasil diperbarui!');
-=======
         $data = $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama'  => 'required|string|max:255',
             'no_hp' => 'nullable|string|max:25',
         ]);
 
-        $user = session('user');
-        $user['nama'] = $data['nama'];
+        $user = session('user', []);
+        $user['nama']  = $data['nama'];
         $user['no_hp'] = $data['no_hp'] ?? '';
 
         session(['user' => $user]);
 
-        return back()->with('success', 'Profil berhasil diperbarui.');
->>>>>>> adf6543c822861eed8508458e30f7487ead6e5d9
+        return back()->with('success', 'Profil berhasil diperbarui!');
     }
 
     public function changePassword(Request $request)
     {
         $request->validate([
-<<<<<<< HEAD
             'password_lama' => 'required',
             'password_baru' => 'required|min:6'
         ]);
@@ -96,14 +74,5 @@ class ProfileController extends Controller
         session(['db_mahasiswa' => $dbMhs]);
 
         return back()->with('success', 'Akun ' . $request->role . ' baru berhasil dibuat!');
-=======
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-
-        return back()->with(
-            'success',
-            'Simulasi perubahan password berhasil. Akun demo akan kembali ke password awal saat login berikutnya.'
-        );
->>>>>>> adf6543c822861eed8508458e30f7487ead6e5d9
     }
 }
