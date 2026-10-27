@@ -1,0 +1,17 @@
+:root {
+    --primary-purple: #6F42C1;      /* Utama, Sidebar, Header Tabel */
+    --hover-purple: #59339D;        /* Hover Tombol */
+    --bg-white: #FFFFFF;            /* Topbar, Card, Form */
+    --bg-light-gray: #F7F7FB;       /* Background Halaman */
+    --text-dark: #343A40;           /* Teks Utama */
+}
+
+body {
+    background-color: var(--bg-light-gray);
+    color: var(--text-dark);
+}
+
+.bg-purple { background-color: var(--primary-purple) !important; color: #fff; }
+.btn-purple { background-color: var(--primary-purple); color: #fff; border: none; }
+.btn-purple:hover { background-color: var(--hover-purple); color: #fff; }
+.card, .topbar { background-color: var(--bg-white); }
