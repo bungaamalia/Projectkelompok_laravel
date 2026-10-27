@@ -1,0 +1,125 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class AuthController extends Controller
+{
+    public function showLogin()
+    {
+
+        return view('auth.login');
+    }
+
+    public function login(Request $request)
+    {
+        $data = $request->validate([
+            'username' => ['required', 'string'],
+            'password' => ['required', 'string'],
+        ]);
+
+        $users = [
+            'admin' => [
+                'id_user' => 1,
+                'username' => 'admin',
+                'nama' => 'Admin Akademik UCS',
+                'role' => 'Admin',
+                'prodi' => 'Teknik Informatika',
+                'no_hp' => '08111111111',
+            ],
+
+            'dosen' => [
+                'id_user' => 2,
+                'username' => '0412089001',
+                'nama' => 'Andi Saputra, M.Kom.',
+                'role' => 'Dosen',
+                'prodi' => 'Teknik Informatika',
+                'no_hp' => '08987654321',
+            ],
+
+            '0412089001' => [
+                'id_user' => 2,
+                'username' => '0412089001',
+                'nama' => 'Andi Saputra, M.Kom.',
+                'role' => 'Dosen',
+                'prodi' => 'Teknik Informatika',
+                'no_hp' => '08987654321',
+            ],
+
+            '24100001' => [
+                'id_user' => 3,
+                'username' => '24100001',
+                'nama' => 'Bunga Amalia Kharismawati',
+                'role' => 'Mahasiswa',
+                'prodi' => 'Teknik Informatika',
+                'no_hp' => '08123456789',
+            ],
+
+            '24100002' => [
+                'id_user' => 4,
+                'username' => '24100002',
+                'nama' => 'Aditya Pratama',
+                'role' => 'Mahasiswa',
+                'prodi' => 'Teknik Informatika',
+                'no_hp' => '08123456780',
+            ],
+
+            '24100003' => [
+                'id_user' => 5,
+                'username' => '24100003',
+                'nama' => 'Nadia Putri Lestari',
+                'role' => 'Mahasiswa',
+                'prodi' => 'Teknik Informatika',
+                'no_hp' => '08123456781',
+            ],
+
+            '25100001' => [
+                'id_user' => 6,
+                'username' => '25100001',
+                'nama' => 'Rizky Ramadhan',
+                'role' => 'Mahasiswa',
+                'prodi' => 'Teknik Informatika',
+                'no_hp' => '08123456782',
+            ],
+
+            '25100002' => [
+                'id_user' => 7,
+                'username' => '25100002',
+                'nama' => 'Siti Aulia Rahma',
+                'role' => 'Mahasiswa',
+                'prodi' => 'Teknik Informatika',
+                'no_hp' => '08123456783',
+            ],
+        ];
+
+        if (
+            !isset($users[$data['username']]) ||
+            $data['password'] !== 'password'
+        ) {
+            return back()
+                ->withErrors([
+                    'login' => 'Username atau password salah.',
+                ])
+                ->withInput($request->only('username'));
+        }
+
+        // Membuat sesi baru setelah login berhasil
+        $request->session()->regenerate();
+
+        $request->session()->put('user', $users[$data['username']]);
+
+        return redirect()->route('dashboard');
+    }
+
+    public function logout(Request $request)
+    {
+        // Hapus sesi login dan buat token CSRF baru
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()
+            ->route('login')
+            ->with('success', 'Berhasil keluar dari sistem.');
+    }
+}
